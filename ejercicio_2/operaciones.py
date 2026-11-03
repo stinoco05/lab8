@@ -1,3 +1,6 @@
+from functools import reduce
+
+
 """EJERCICIO 10 — Lógica del reporte
 
 Implementa generar_reporte(productos). Cada producto tiene nombre único,
@@ -23,4 +26,16 @@ Para [] devuelve listas y set vacíos, valor_total=0 y hay_agotados=False.
 
 def generar_reporte(productos):
     # TODO: construye y devuelve el reporte.
-    pass
+
+  if not productos:
+    diccionario = {"disponibles": [], "valor_total": 0, "hay_agotados": False, "categorias": set(), "precios_con_recargo": []}
+    return diccionario
+  
+  disponibles = list(map(lambda p: p["nombre"], (filter(lambda p: p["stock"] > 0, productos))))
+  valor_total = reduce(lambda contador, x: contador +x, (map(lambda p: p["precio"]*p["stock"], productos)), 0)
+  hay_agotados = any((map(lambda p: p["stock"] == 0, productos)))
+  categorias = {p["categoria"] for p in productos}
+  calcular_recargo = lambda precio: round(precio*1.10, 2)
+  precios_con_recargo = [(p["nombre"], calcular_recargo(p["precio"])) for p in productos if p["stock"] > 0]
+  diccionario = {"disponibles": disponibles, "valor_total": valor_total, "hay_agotados": hay_agotados, "categorias": categorias, "precios_con_recargo": precios_con_recargo}
+  return diccionario 

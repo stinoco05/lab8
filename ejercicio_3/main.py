@@ -32,20 +32,42 @@ Completa ejercicio 3: reservas y liberaciones
 """
 
 def reservar_puesto(puestos, coordenada):
+    fila, columna = coordenada
+    if 0 <= fila < len(puestos) and 0 <= columna < len(puestos[0]):
+        if puestos[fila][columna] == 0:
+            puestos[fila][columna] = 1
+            return True
+    return False
     # TODO: implementa esta funcion.
-    pass
+    
 
 
 def liberar_puesto(puestos, coordenada):
+    fila, columna = coordenada
+    if 0 <= fila < len(puestos) and 0 <= columna < len(puestos[0]):
+        if puestos[fila][columna] == 1:
+            puestos[fila][columna] = 0
+            return True
+    return False
+
     # TODO: implementa esta funcion.
-    pass
+    
 
 
 if __name__ == "__main__":
     puestos = [[1, 0, 1], [0, 0, 1]]
+
+    reserva_exitosa = reservar_puesto(puestos, (1,0))
+    puesto_liberado = liberar_puesto(puestos, (0,2))
+
+    print(f"¿La reserva fue exitosa para el puesto {(1,0)}? {reserva_exitosa}")
+    print(f"¿Se libera el puesto {(0,2)}? {puesto_liberado}")
 
     # TODO: escribe las llamadas y muestra los resultados con print.
     # TODO: agrega al menos un caso propio.
 
 # ANALISIS
 # TODO: responde aqui las preguntas del enunciado.
+"""
+No es necesario ya que estamos llamando directamente a la coordenada, la complejidad es O(1)
+"""
